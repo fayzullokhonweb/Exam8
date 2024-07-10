@@ -36,7 +36,7 @@ function PieChart() {
   });
 
   useEffect(() => {
-    if (products) {
+    if (products && products.length > 0) {
       // Process the data to get counts of each nation
       const nationCounts = products.reduce((acc, product) => {
         acc[product.nation] = (acc[product.nation] || 0) + 1;
@@ -58,8 +58,12 @@ function PieChart() {
     }
   }, [products]);
 
+  if (!products || products.length === 0) {
+    return <h1></h1>; // Bu yerda hech narsa ko'rsatilmaydi
+  }
+
   return (
-    <div className="flex flex-col items-center w-full max-w-5xl px-40 mt-24">
+    <div className="flex flex-col items-center w-full max-w-5xl px-40 mt-24 ">
       <h2 className="text-2xl text-left mb-4">
         Distribution of Foods by Nation
       </h2>

@@ -63,8 +63,8 @@ function BarChart() {
 
   if (!products || products.length === 0) {
     return (
-      <div className="text-xl flex items-center justify-center mt-8 gap-10 ">
-        <h2>there is no recipe :(</h2>
+      <div className="text-xl flex sm:flex-row flex-col items-center justify-center mt-8 gap-3 md:gap-10 ">
+        <h2 className="text-3xl">there is no recipe :(</h2>
         <Link to="/create" className="hover:underline">
           Create a recipe
         </Link>

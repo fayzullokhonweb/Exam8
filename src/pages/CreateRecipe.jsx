@@ -140,9 +140,9 @@ function CreateRecipe() {
                 />
               </div>
               <div>
-                <button type="button" className="btn btn-primary h-full">
+                {/* <button type="button" className="btn btn-primary h-full">
                   add
-                </button>
+                </button> */}
               </div>
             </div>
             <FormInput

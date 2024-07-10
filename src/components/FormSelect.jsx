@@ -14,9 +14,9 @@ function FormSelect({ label, name, value, onChange, refSelect }) {
         ref={refSelect}
       >
         <option value="Uzbek">Uzbek</option>
-        <option value="Turkey">Turkey</option>
-        <option value="Russia">Russia</option>
-        <option value="Europa">Europa</option>
+        <option value="Turkey">Kazakhstan</option>
+        <option value="Russia">Turkey</option>
+        <option value="Europa">Russia</option>
         <option value="Other">Other</option>
       </select>
     </label>

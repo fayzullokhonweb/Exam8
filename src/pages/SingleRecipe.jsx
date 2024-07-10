@@ -6,15 +6,15 @@ import { db } from "../firebase/firebaseConfig";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { addProduct } from "../features/productSlice";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const SingleRecipe = () => {
+  const [productAmount, setProductAmount] = useState(1);
   let { id } = useParams();
-  let { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [amount, setAmount] = useState(1);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -36,28 +36,29 @@ const SingleRecipe = () => {
     fetchRecipe();
   }, [id]);
 
-  const handleIncrease = () => {
-    setAmount((prevAmount) => prevAmount + 1);
-  };
-
-  const handleDecrease = () => {
-    if (amount > 1) {
-      setAmount((prevAmount) => prevAmount - 1);
-    }
-  };
-
   const handleAddToCart = () => {
     if (recipe) {
       dispatch(
         addProduct({
-          slug: id,
+          id, // Use id here
           time: recipe.time,
           price: recipe.price,
-          amount,
+          amount: productAmount, // Use productAmount here
           image: recipe.imgUrl,
           title: recipe.title,
         })
       );
+      toast.success("Your chosen amount of food has been added to the store");
+      setProductAmount(1);
+    }
+  };
+
+  const setAmount = (type) => {
+    if (type === "decrease" && productAmount > 1) {
+      setProductAmount((prev) => prev - 1);
+    } else if (type === "increase" && productAmount < 9) {
+      // updated limit
+      setProductAmount((prev) => prev + 1);
     }
   };
 
@@ -112,15 +113,17 @@ const SingleRecipe = () => {
               <button
                 type="button"
                 className="cursor-pointer"
-                onClick={handleDecrease}
+                onClick={() => setAmount("decrease")}
+                disabled={productAmount === 1}
               >
                 <FaMinus className="w-5 h-5 " />
               </button>
-              <p className="mx-4 text-xl">{amount}</p>
+              <p className="mx-4 text-xl">{productAmount}</p>
               <button
                 type="button"
                 className="cursor-pointer"
-                onClick={handleIncrease}
+                onClick={() => setAmount("increase")}
+                disabled={productAmount === 10}
               >
                 <FaPlus className="w-5 h-5" />
               </button>

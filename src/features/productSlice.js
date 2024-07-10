@@ -1,75 +1,70 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const loadState = () => {
-  try {
-    const serializedState = localStorage.getItem("cart");
-    return serializedState ? JSON.parse(serializedState) : undefined;
-  } catch (err) {
-    return undefined;
-  }
-};
-
-const initialState = loadState() || {
-  amount: 0,
-  products: [],
+const dataFromLocalStorage = () => {
+  return (
+    JSON.parse(localStorage.getItem("products")) || {
+      products: [],
+      amount: 0,
+      price: 0,
+    }
+  );
 };
 
 const productsSlice = createSlice({
   name: "products",
-  initialState,
+  initialState: dataFromLocalStorage(),
   reducers: {
-    addProduct: (state, action) => {
-      const { slug, price, amount, image, title } = action.payload;
-      const existingProduct = state.products.find(
-        (product) => product.slug === slug
-      );
+    addProduct: (state, { payload }) => {
+      const item = state.products.find((product) => product.id === payload.id);
 
-      if (existingProduct) {
-        existingProduct.amount += amount;
+      if (item) {
+        item.amount += payload.amount;
       } else {
-        state.products.push({ slug, price, amount, image, title });
-        state.amount += amount;
+        state.products.push(payload);
       }
 
-      // Save state to localStorage
-      localStorage.setItem("cart", JSON.stringify(state));
+      productsSlice.caseReducers.calculateTotal(state);
     },
-    removeProduct: (state, action) => {
-      const slug = action.payload;
-      const productIndex = state.products.findIndex(
-        (product) => product.slug === slug
-      );
-
-      if (productIndex !== -1) {
-        state.amount -= state.products[productIndex].amount;
-        state.products.splice(productIndex, 1);
-      }
-
-      // Save state to localStorage
-      localStorage.setItem("cart", JSON.stringify(state));
+    removeProduct: (state, { payload }) => {
+      state.products = state.products.filter((item) => {
+        return item.id !== payload;
+      });
+      productsSlice.caseReducers.calculateTotal(state);
     },
     clearCart: (state) => {
       state.amount = 0;
       state.products = [];
-
-      // Clear cart from localStorage
-      localStorage.removeItem("cart");
     },
-    updateProductAmount: (state, action) => {
-      const { slug, amount } = action.payload;
-      const product = state.products.find((product) => product.slug === slug);
-
-      if (product) {
-        state.amount += amount - product.amount; // Update total amount
-        product.amount = amount;
-
-        // Save state to localStorage
-        localStorage.setItem("cart", JSON.stringify(state));
+    changeAmount: (state, { payload }) => {
+      const item = state.products.find((item) => item.id === payload.id);
+      if (payload.type === "increase") {
+        item.amount += 1;
+      } else {
+        item.amount -= 1;
       }
+      productsSlice.caseReducers.calculateTotal(state);
+    },
+    calculateTotal: (state) => {
+      let price = 0;
+      let amount = 0;
+
+      state.products.forEach((item) => {
+        price += item.price * item.amount;
+        amount += item.amount;
+      });
+
+      state.amount = amount;
+      state.price = price;
+      localStorage.setItem("products", JSON.stringify(state));
     },
   },
 });
 
-export const { addProduct, removeProduct, clearCart, updateProductAmount } =
-  productsSlice.actions;
+export const {
+  addProduct,
+  removeProduct,
+  calculateTotal,
+  clearCart,
+  changeAmount,
+} = productsSlice.actions;
 export default productsSlice.reducer;
