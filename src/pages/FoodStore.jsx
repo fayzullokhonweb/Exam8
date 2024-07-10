@@ -19,8 +19,12 @@ function FoodStore() {
     dispatch(changeAmount({ id: productId, type: "increase" }));
   };
 
-  const handleDecrement = (productId) => {
-    dispatch(changeAmount({ id: productId, type: "decrease" }));
+  const handleDecrement = (productId, amount) => {
+    if (amount === 1) {
+      handleRemoveProduct(productId);
+    } else {
+      dispatch(changeAmount({ id: productId, type: "decrease" }));
+    }
   };
 
   const handleCheckout = () => {
@@ -28,7 +32,15 @@ function FoodStore() {
     onClose();
   };
 
-  console.log(products);
+  // Subtotalni hisoblash
+  const subtotal = products.reduce((total, product) => {
+    return total + product.price * product.amount;
+  }, 0);
+
+  const shipping = 2.0;
+  const tax = 4.0;
+  const total = subtotal + shipping + tax;
+
   return (
     <div className="font-sans md:max-w-2xl lg:max-w-5xl max-w-[340px] sm:max-w-xl mx-auto py-4">
       <h1 className="text-3xl font-bold text-center">Shopping Cart</h1>
@@ -36,7 +48,6 @@ function FoodStore() {
         <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8 mt-16">
           <div className="lg:col-span-2 space-y-4">
             {products.map((product) => {
-              console.log(product);
               return (
                 <div
                   key={product.id}
@@ -65,8 +76,10 @@ function FoodStore() {
                   <div className="ml-auto">
                     <div className="mt-6 flex items-center px-3 py-1.5 border text-xs outline-none bg-transparent rounded-md">
                       <button
-                        onClick={() => handleDecrement(product.id)}
-                        disabled={product.amount === 1}
+                        onClick={() =>
+                          handleDecrement(product.id, product.amount)
+                        }
+                        // disabled={product.amount === 1}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -137,17 +150,23 @@ function FoodStore() {
 
             <ul className="mt-6 space-y-3">
               <li className="flex flex-wrap gap-4 text-sm">
-                Subtotal <span className="ml-auto font-bold">$200.00</span>
+                Subtotal{" "}
+                <span className="ml-auto font-bold">
+                  ${subtotal.toFixed(2)}
+                </span>
               </li>
               <li className="flex flex-wrap gap-4 text-sm">
-                Shipping <span className="ml-auto font-bold">$2.00</span>
+                Shipping{" "}
+                <span className="ml-auto font-bold">
+                  ${shipping.toFixed(2)}
+                </span>
               </li>
               <li className="flex flex-wrap gap-4 text-sm">
-                Tax <span className="ml-auto font-bold">$4.00</span>
+                Tax <span className="ml-auto font-bold">${tax.toFixed(2)}</span>
               </li>
               <hr className="border" />
               <li className="flex flex-wrap gap-4 text-sm font-bold">
-                Total <span className="ml-auto">$206.00</span>
+                Total <span className="ml-auto">${total.toFixed(2)}</span>
               </li>
             </ul>
 
@@ -172,9 +191,7 @@ function FoodStore() {
       ) : (
         <div className="align-element mt-16 flex items-center justify-center flex-col text-center p-6">
           <img className="w-56 mb-7" src="./assets/empty.png" alt="" />
-          <h1 className="text-2xl font-medium">
-            Your cart is currently no products
-          </h1>
+          <h1 className="text-2xl font-medium">Your cart is currently empty</h1>
           <p>
             Start with the selections on the main page or find the product you
             need using the search

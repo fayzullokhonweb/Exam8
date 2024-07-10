@@ -15,17 +15,18 @@ export const action = async ({ request }) => {
   let formData = await request.formData();
   let title = formData.get("title");
   let time = formData.get("time");
+  let price = formData.get("price");
   let ingredients = formData.get("ingredients");
   let imgUrl = formData.get("imgUrl");
   let nation = formData.get("nation");
   let method = formData.get("method");
 
   // Add validation check
-  if (!title || !time || !imgUrl || !ingredients || !method) {
+  if (!title || !time || !imgUrl || !ingredients || !method || !price) {
     return { error: "All fields are required." };
   }
 
-  return { title, time, imgUrl, ingredients, method, nation };
+  return { title, time, imgUrl, ingredients, method, nation, price };
 };
 
 function CreateRecipe() {
@@ -39,6 +40,7 @@ function CreateRecipe() {
     imgUrl: "",
     ingredients: "",
     method: "",
+    price: "",
     nation: "Uzbek",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,6 +54,7 @@ function CreateRecipe() {
         ingredients: actionData.ingredients,
         method: actionData.method,
         nation: actionData.nation,
+        price: actionData.price,
         uid: user.uid,
       };
       addDoc(collection(db, "foods"), newFood)
@@ -63,6 +66,7 @@ function CreateRecipe() {
             imgUrl: "",
             ingredients: "",
             method: "",
+            price: "",
             nation: "Uzbek",
           });
         })
@@ -94,7 +98,8 @@ function CreateRecipe() {
       inputValue.time &&
       inputValue.imgUrl &&
       inputValue.ingredients &&
-      inputValue.method
+      inputValue.method &&
+      inputValue.price
     ) {
       setIsModalOpen(true);
     } else {
@@ -128,23 +133,24 @@ function CreateRecipe() {
               value={inputValue.time}
               onChange={handleInputChange}
             />
-            <div className="flex items-end w-full justify-center gap-1 ">
-              <div className="w-full">
-                <FormInput
-                  label="Ingredients:"
-                  placeholder="Enter ingredients of meal"
-                  name="ingredients"
-                  type="text"
-                  value={inputValue.ingredients}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                {/* <button type="button" className="btn btn-primary h-full">
-                  add
-                </button> */}
-              </div>
-            </div>
+
+            <FormInput
+              label="Ingredients:"
+              placeholder="Enter ingredients of meal"
+              name="ingredients"
+              type="text"
+              value={inputValue.ingredients}
+              onChange={handleInputChange}
+            />
+            <FormInput
+              label="Price:"
+              placeholder="Enter price"
+              name="price"
+              type="number"
+              value={inputValue.price}
+              onChange={handleInputChange}
+            />
+
             <FormInput
               label="Image URL:"
               placeholder="Enter image URL"
