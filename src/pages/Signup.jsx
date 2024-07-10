@@ -40,7 +40,7 @@ function Signup() {
           }
         `}
       </style>
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black to-black opacity-60 z-10"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black to-black opacity-30 z-10"></div>
       <video
         src={videoBg}
         autoPlay

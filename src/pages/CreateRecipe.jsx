@@ -135,19 +135,19 @@ function CreateRecipe() {
             />
 
             <FormInput
-              label="Ingredients:"
-              placeholder="Enter ingredients of meal"
-              name="ingredients"
-              type="text"
-              value={inputValue.ingredients}
-              onChange={handleInputChange}
-            />
-            <FormInput
               label="Price:"
               placeholder="Enter price"
               name="price"
               type="number"
               value={inputValue.price}
+              onChange={handleInputChange}
+            />
+            <FormInput
+              label="Ingredients:"
+              placeholder="Enter ingredients of meal"
+              name="ingredients"
+              type="text"
+              value={inputValue.ingredients}
               onChange={handleInputChange}
             />
 
