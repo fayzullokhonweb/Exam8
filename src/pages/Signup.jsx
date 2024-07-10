@@ -23,7 +23,6 @@ export const action = async ({ request }) => {
 };
 
 function Signup() {
-  
   const userData = useActionData();
   const { register, registerWithGoogle } = useSignup();
 
@@ -41,13 +40,13 @@ function Signup() {
           }
         `}
       </style>
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black to-black opacity-60 z-10 "></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black to-black opacity-60 z-10"></div>
       <video
         src={videoBg}
         autoPlay
         loop
         muted
-        className="w-full h-full object-cover -z-40"
+        className="absolute top-0 left-0 w-full h-full object-cover -z-40"
       ></video>
       <div className="min-h-screen flex items-center justify-center gap-16 z-50 absolute w-full h-full top-0 ">
         <div className="max-w-xs lg:max-w-sm p-7  w-full  rounded-lg shadow-lg bg-slate-500/15 backdrop-blur-md ">
@@ -81,18 +80,18 @@ function Signup() {
                   Already have an account?
                   <Link
                     to="/login"
-                    className="link link-primary ml-1 no-underline hover:underline"
+                    className="link link-primary   ml-1 no-underline hover:underline"
                   >
                     Login
                   </Link>
                 </p>
               </div>
               <div className="w-full flex items-center">
-                <div className="w-2/5 bg-black h-px opacity-25"></div>
+                <div className="w-2/5 bg-white h-px opacity-25"></div>
                 <div className="px-5">
                   <p className="text-lg -mt-1 text-white opacity-75">Or</p>
                 </div>
-                <div className="w-2/5 bg-black h-px opacity-25"></div>
+                <div className="w-2/5 bg-white h-px opacity-25"></div>
               </div>
             </Form>
           </div>

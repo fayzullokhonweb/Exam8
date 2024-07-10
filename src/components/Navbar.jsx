@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/userSlice";
 import { Link } from "react-router-dom";
+import { TiHomeOutline } from "react-icons/ti";
 import WeatherLocation from "./WeatherLocation";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { IoStatsChartOutline } from "react-icons/io5";
+import { MdOutlineLocalGroceryStore } from "react-icons/md";
+import { CgArrowsExchange } from "react-icons/cg";
+import { MdLogout } from "react-icons/md";
 
 function Navbar() {
   let { user } = useSelector((state) => state.user);
   let dispetch = useDispatch();
-  console.log(user);
 
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "winter"
@@ -50,21 +55,34 @@ function Navbar() {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-4 w-52 p-2 shadow"
             >
               <li>
-                <Link to="/" className="justify-between">
+                <Link to="/" className="items-center">
+                  <TiHomeOutline className="w-4 h-4" />
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/create">Createa Recipe</Link>
+                <Link to="/create">
+                  <MdOutlineCreateNewFolder className="w-4 h-4" />
+                  Createa Recipe
+                </Link>
               </li>
               <li>
-                <Link to="/stats">Statistics</Link>
+                <Link to="/stats">
+                  <IoStatsChartOutline className="w-4 h-4" />
+                  Statistics
+                </Link>
               </li>
               <li>
-                <Link to="/store">Store</Link>
+                <Link to="/store">
+                  {" "}
+                  <MdOutlineLocalGroceryStore className="w-4 h-4" /> Store
+                </Link>
               </li>
               <li>
-                <button onClick={handleToggle}>Change theme</button>
+                <button onClick={handleToggle}>
+                  {" "}
+                  <CgArrowsExchange className="w-5 h-5" /> Change theme
+                </button>
               </li>
               <li>
                 <button
@@ -72,6 +90,7 @@ function Navbar() {
                     dispetch(logout(user));
                   }}
                 >
+                  <MdLogout className="w-4 h-4" />
                   Logout
                 </button>
               </li>

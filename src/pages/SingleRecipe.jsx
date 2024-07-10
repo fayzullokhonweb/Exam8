@@ -51,9 +51,11 @@ const SingleRecipe = () => {
       dispatch(
         addProduct({
           slug: id,
+          time: recipe.time,
           price: recipe.price,
           amount,
           image: recipe.imgUrl,
+          title: recipe.title,
         })
       );
     }
@@ -124,13 +126,18 @@ const SingleRecipe = () => {
               </button>
             </div>
             <div>
-              <button className="btn btn-primary text-white" onClick={handleAddToCart}>
+              <button
+                className="btn btn-primary text-white"
+                onClick={handleAddToCart}
+              >
                 Add To Cart
               </button>
             </div>
           </div>
-          <div className="absolute bottom-7 right-20 group-hover:block hidden">
-            <Link to="/" className="btn btn-primary text-white">Back</Link>
+          <div className="absolute bottom-7 right-20 ">
+            <Link to="/" className="btn btn-primary text-white">
+              Back
+            </Link>
           </div>
         </div>
       </div>

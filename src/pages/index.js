@@ -6,3 +6,4 @@ export { default as SingleRecipe } from "./SingleRecipe";
 export { default as FoodStore } from "./FoodStore";
 export { default as ResetPassword } from "./ResetPassword";
 export { default as Error } from "./Error";
+export { default as Stats } from "./Stats";

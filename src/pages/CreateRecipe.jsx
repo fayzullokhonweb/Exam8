@@ -184,15 +184,13 @@ function CreateRecipe() {
         </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div>
-          <li key={inputValue.title} className="group">
-            <div className="card lg:max-w-sm md:max-w-sm max-w-xs w-full bg-base-100 shadow-md hover:shadow-2xl group relative hover:-translate-y-0.5">
-              <div className="absolute cursor-pointer top-3 hidden group-hover:block right-3">
-                <button onClick={closeModal}>
-                  <IoClose className="w-7 h-7 " />
-                </button>
-              </div>
-              <figure className="px-10 pt-12">
+        <div className="">
+          <li
+            key={inputValue.title}
+            className="group w-full   sm:px-24 list-none "
+          >
+            <div className="card lg:max-w-sm md:max-w-sm max-w-[300px] w-full bg-base-100 shadow-md hover:shadow-2xl group relative hover:-translate-y-0.5">
+              <figure className="  px-12 sm:px-10 pt-12">
                 <img
                   src={inputValue.imgUrl}
                   alt={inputValue.title}
@@ -215,19 +213,6 @@ function CreateRecipe() {
                 <p className="line-clamp-2 text-center mb-2">
                   {inputValue.method}
                 </p>
-                <div className="card-actions">
-                  <Link
-                    to="#"
-                    className="text-lg font-serif btn btn-outline border-none"
-                  >
-                    <span className="flex items-center gap-1">
-                      <span> More Details</span>
-                      <span>
-                        <CiLogin className="w-7 h-7" />
-                      </span>
-                    </span>
-                  </Link>
-                </div>
               </div>
             </div>
           </li>

@@ -19,7 +19,7 @@ const productsSlice = createSlice({
   initialState,
   reducers: {
     addProduct: (state, action) => {
-      const { slug, price, amount, image } = action.payload;
+      const { slug, price, amount, image, title } = action.payload;
       const existingProduct = state.products.find(
         (product) => product.slug === slug
       );
@@ -27,7 +27,7 @@ const productsSlice = createSlice({
       if (existingProduct) {
         existingProduct.amount += amount;
       } else {
-        state.products.push({ slug, price, amount, image });
+        state.products.push({ slug, price, amount, image, title });
         state.amount += amount;
       }
 

@@ -24,15 +24,15 @@ const RecipeList = () => {
   };
 
   return (
-    <div className="align-element px-7 mt-5">
+    <div className="align-element px-7 mt-5 overflow-x-hidden">
       <h1 className="text-2xl mb-6">Recipes</h1>
       {error && <p>Error loading data: {error.message}</p>}
-      <ul className="grid grid-cols-1 sm:grid-cols-1 items-center md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <ul className="grid grid-cols-1   md:grid-cols-2 sm:grid-cols-1 items-center  lg:grid-cols-3  gap-5">
         {data &&
           data.map((food) => {
             return (
               <li key={food.id} className="group">
-                <div className="card  lg:max-w-sm md:max-w-sm max-w-xs w-full bg-base-100 shadow-md hover:shadow-2xl group relative hover:-translate-y-0.5">
+                <div className="card  lg:max-w-md md:max-w-sm max-w-xs w-full bg-base-100 shadow-md hover:shadow-2xl group relative hover:-translate-y-0.5">
                   <div className="absolute cursor-pointer top-3 hover: hidden group-hover:block  right-3">
                     <button onClick={() => handleDelete(food.id)}>
                       <IoClose className="w-7 h-7 " />
